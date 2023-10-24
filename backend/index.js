@@ -5,6 +5,8 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 require("dotenv").config();
 const cors = require("cors");
+const createError = require("http-errors");
+const eventRoutes = require("./routes/events");
 
 const Event = require("./models/Event");
 const User = require("./models/User");
@@ -24,14 +26,22 @@ app.use(
   })
 );
 
-
-// BCRYPT: when doing log in stuff, try to implement bcrypt
+// BCRYPT: when doing log in stuff, try to implement bcrypt: https://medium.com/@manishsundriyal/a-quick-way-for-hashing-passwords-using-bcrypt-with-nodejs-8464f9785b67
 
 // POPULATE: when it comes time to work out how to show all the events that a single user has created, go back to the "populate" docs.
 
-app.use(express.json);
+app.use(express.json({ extended: false }));
 app.use(morgan("dev"));
 app.use(helmet());
+
+app.use("/events", eventRoutes);
+
+app.get("/", (req, res, next) => {
+    console.log("request received to home route")
+    res.send(`<h2>This is the main page</h2>`)
+})
+
+
 
 app.listen(port, () => {
   console.log(`Events app listening on port ${port}`);
