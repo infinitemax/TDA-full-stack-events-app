@@ -2,6 +2,12 @@ const createError = require("http-errors");
 const mongoose = require("mongoose");
 const { Event } = require("../models/Event");
 const { contentSecurityPolicy } = require("helmet");
+const { User } = require("../models/User");
+const { v4: uuidv4 } =require("uuid");
+
+
+
+
 
 // get all events
 exports.getEvents = async (req, res, next) => {
