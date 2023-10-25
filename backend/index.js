@@ -11,7 +11,7 @@ const eventRoutes = require("./routes/events");
 const Event = require("./models/Event");
 const User = require("./models/User");
 
-const port = 3001;
+const port = process.env.PORT || 3001;
 
 mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
@@ -34,12 +34,12 @@ app.use(express.json({ extended: false }));
 app.use(morgan("dev"));
 app.use(helmet());
 
-app.use("/events", eventRoutes);
+app.use("/", eventRoutes); // using the main route rather than adding "/events"
 
-app.get("/", (req, res, next) => {
-    console.log("request received to home route")
-    res.send(`<h2>This is the main page</h2>`)
-})
+// app.get("/", (req, res, next) => {
+//     console.log("request received to home route")
+//     res.send(`<h2>This is the main page</h2>`)
+// })
 
 
 

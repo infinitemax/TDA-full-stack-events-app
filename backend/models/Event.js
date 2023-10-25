@@ -3,7 +3,11 @@ const mongoose = require("mongoose")
 const eventSchema = new mongoose.Schema({
     title: String,
     venue: String,
-    price: Number
+    price: Number,
+    creator: { 
+                type: mongoose.Schema.Types.ObjectId, 
+                ref: "User"
+            }
 })
 
 
